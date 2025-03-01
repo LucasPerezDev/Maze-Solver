@@ -192,7 +192,7 @@ def remove(self)
   
 - **Description**:
   - Removes and returns the most recently added node from the frontier.
-  
+
 ## Class: `QueueFrontier` (inherits from `Frontier`)
 
 ### Description
@@ -212,3 +212,43 @@ def remove(self)
   
 - **Description**:
   - Removes and returns the earliest added node from the frontier.
+
+## Class: `MazeVisualizer`
+
+### Description
+The `MazeVisualizer` class is responsible for visualizing a maze, its solution, and the explored cells. It uses the Python Imaging Library (PIL) to create a visual representation of the maze.
+
+### Attributes
+
+- **`maze` (Maze)**: The maze object that contains the layout and structure to be visualized.
+- **`solution` (tuple or None)**: The solution to the maze, consisting of a list of actions and a list of cells visited along the path. Defaults to `None`.
+- **`explored` (set)**: A set containing all the explored cells during the pathfinding process. Defaults to an empty set if `None` is provided.
+- **`cell_size` (int)**: The size of each cell in the maze visualization (in pixels). Defaults to 50 pixels.
+- **`cell_border` (int)**: The thickness of the border around each cell in the maze. Defaults to 2 pixels.
+
+### Methods
+
+#### `__init__(self, maze, solution=None, explored=None)`
+```python
+def __init__(self, maze, solution=None, explored=None)
+```
+- **Parameters**:
+  - `maze` (Maze): The maze to be visualized.
+  - `solution` (tuple or None): The solution to the maze, consisting of a list of actions and a list of cells visited. Defaults to `None`.
+  - `explored` (set): A set of explored cells during the search process. Defaults to an empty set if `None` is provided.
+  
+- **Description**:
+  - Initializes the `MazeVisualizer` object with the maze, solution, and explored cells (if provided).
+  
+#### `draw_maze(self, filename, show_solution=True, show_explored=False)`
+```python
+def draw_maze(self, filename, show_solution=True, show_explored=False)
+```
+- **Parameters**:
+  - `filename` (str): The name of the output image file.
+  - `show_solution` (bool): Whether to display the solution path on the maze. Defaults to `True`.
+  - `show_explored` (bool): Whether to display the explored cells. Defaults to `False`.
+
+- **Description**:
+  - Draws the maze to an image file.
+

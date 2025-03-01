@@ -4,7 +4,7 @@
 This project implements a pathfinding algorithm to solve different mazes. The goal is to create an efficient solution for solving mazes of varying sizes.
 
 ## Objectives
-- **Short-term Goals**: Generate a PNG representation of the solution and implement the A* algorithm.
+- **Short-term Goals**: Implement the A* algorithm.
 
 ## Project Structure
 ```
@@ -15,6 +15,7 @@ Maze-solver-methods/
  │ ├── search.py # Solver class and search algorithms (DFS, BFS, etc.)
  │ ├── node.py # Node class used in search algorithms
  │ ├── frontier.py # Frontier class used to manage nodes to be explored 
+ │ ├── visualizer.py # Contains logic to visualize the maze solution
  │── data/ # Directory for maze data files (e.g., maze1.txt) 
  │── docs/ # Project documentation (e.g., API.md)
 ```
