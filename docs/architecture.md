@@ -9,6 +9,9 @@ The Maze Solver project is designed to load, validate, and solve mazes using var
 This is the main directory where the core program logic is located.
 - **`main.py`**: The entry point of the application. It orchestrates the loading of the maze, the selection of the pathfinding algorithm, and outputs the results.
 - **`maze.py`**: Contains the `Maze` class which is responsible for reading and representing the maze structure. It also includes methods to validate the maze and print it to the console.
+- **`search.py`**: Defines the `Solver` class and the pathfinding algorithms used to solve the maze.
+- **`frontier.py`**: Contains the `Frontier`, `StackFrontier`, and `QueueFrontier` classes, which manage the frontier used in the search algorithms.
+- **`node.py`**: Defines the `Node` class, which represents a state in the maze and holds the parent node and action.
 
 ### 2. `data/`
 This directory contains maze data files (`.txt` format) that are used to test the solver. Each file represents a different maze layout.
