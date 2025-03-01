@@ -1,3 +1,4 @@
+import heapq
 from node import Node
 
 class Frontier():
@@ -122,3 +123,66 @@ class QueueFrontier(Frontier):
             node = self.frontier[0]  # Gets the first node.
             self.frontier = self.frontier[1:]  # Removes the first node from the frontier.
             return node  # Returns the node.
+        
+class AStarFrontier(Frontier):
+    """
+    A subclass of Frontier that implements an A* search algorithm frontier,
+    where nodes are added and removed based on the lowest cost (f = g + h).
+
+    Methods:
+        add(node, cost): Adds a node to the frontier with a given cost.
+        remove(): Removes and returns the node with the lowest cost.
+    """
+
+    def __init__(self):
+        """
+        Initializes the A* frontier as an empty priority queue.
+        """
+        super().__init__()
+        self.frontier = []
+        self.entry_finder = {}  # Mapping of nodes to entries
+        self.counter = 0  # Unique sequence count
+
+    def add(self, node, cost):
+        """
+        Adds a node to the frontier with a given cost.
+
+        Args:
+            node (Node): The node to be added to the frontier.
+            cost (float): The cost associated with the node (f = g + h).
+        """
+        if node.state in self.entry_finder:
+            self.remove(node)
+        entry = [cost, self.counter, node]
+        self.entry_finder[node.state] = entry
+        heapq.heappush(self.frontier, entry)
+        self.counter += 1
+
+    def remove(self):
+        """
+        Removes and returns the node with the lowest cost.
+
+        Returns:
+            Node: The node with the lowest cost in the frontier.
+
+        Raises:
+            Exception: If the frontier is empty, an exception is raised.
+        """
+        while self.frontier:
+            cost, _, node = heapq.heappop(self.frontier)
+            if node.state in self.entry_finder:
+                del self.entry_finder[node.state]
+                return node
+        raise Exception("empty frontier")
+
+    def contains_state(self, state):
+        """
+        Checks if the frontier contains a node with a given state.
+
+        Args:
+            state (tuple): The state to check for in the frontier.
+
+        Returns:
+            bool: True if the frontier contains a node with the state, False otherwise.
+        """
+        return state in self.entry_finder

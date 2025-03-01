@@ -1,8 +1,7 @@
-
 # Maze Solver API Documentation
 
 ## Overview
-This document provides an overview of the Maze Solver API, detailing the class `Maze` and its methods. The class is designed to load a maze from a file, validate its contents, and display it in the console.
+This document provides an overview of the Maze Solver API, detailing the classes and methods used in the project. The classes are designed to load a maze from a file, solve it using various pathfinding algorithms, and visualize the solution.
 
 ## Class: `Maze`
 
@@ -44,7 +43,7 @@ def print(self)
   - Prints the maze to the console in a human-readable format.
   - The start point is marked with 'A', the goal point with 'B', walls with '█', and open paths with spaces (' ').
   - If a solution exists, the solution path will be printed, with the start and goal points displayed.
--**Returns**:
+- **Returns**:
   - `None`
 
 #### `neighbors(state)`
@@ -61,11 +60,10 @@ def neighbors(self, state)
 - **Description**:
   - For each direction (up, down, left, right), it checks if the neighboring cell is within the bounds of the maze and if it's an open path (not a wall).
 
-
 ## Class: `Solver`
 
 ### Description
-The `Solver` class implements a pathfinding algorithm (such as DFS or BFS) to solve the maze. It finds a path from the start point to the goal point.
+The `Solver` class implements a pathfinding algorithm (such as DFS, BFS, or A*) to solve the maze. It finds a path from the start point to the goal point.
 
 ### Attributes
 
@@ -107,21 +105,34 @@ The `Node` class represents a state in the maze and stores information about the
 - **`state` (tuple)**: A tuple representing the current state in the maze (row, column).
 - **`parent` (Node or None)**: The parent node from which this node was reached, or `None` if it is the root node (start point).
 - **`action` (str or None)**: The action taken to reach the current state. This can be `None` for the root node or a string representing the move (e.g., 'up', 'down', 'left', 'right').
+- **`g` (float)**: The cost from the start node to this node.
+- **`h` (float)**: The heuristic cost estimate from this node to the goal.
 
 ### Methods
 
-#### `__init__(state, parent, action)`
+#### `__init__(state, parent, action, g=0, h=0)`
 ```python
-def __init__(self, state, parent, action)
+def __init__(self, state, parent=None, action=None, g=0, h=0)
 ```
 - **Parameters**:
   - `state` (tuple): The current state `(row, column)`.
   - `parent` (Node or None): The parent node from which this state was reached.
   - `action` (str or None): The action taken to reach this state.
+  - `g` (float): The cost from the start node to this node.
+  - `h` (float): The heuristic cost estimate from this node to the goal.
   
 - **Description**:
-  - Initializes a new node with the given state, parent, and action.
+  - Initializes a new node with the given state, parent, action, g, and h.
 
+#### `f`
+```python
+@property
+def f(self)
+```
+- **Description**:
+  - Returns the total cost (f = g + h) for the node.
+- **Returns**:
+  - `float`: The total cost.
 
 ## Class: `Frontier`
 
@@ -213,6 +224,43 @@ def remove(self)
 - **Description**:
   - Removes and returns the earliest added node from the frontier.
 
+## Class: `AStarFrontier` (inherits from `Frontier`)
+
+### Description
+The `AStarFrontier` class is a specific type of frontier that implements the behavior of a priority queue. It removes the node with the lowest total cost (f = g + h).
+
+### Methods
+
+#### `__init__()`
+```python
+def __init__(self)
+```
+- **Description**: Initializes an empty priority queue frontier.
+
+#### `add(node, cost)`
+```python
+def add(self, node, cost)
+```
+- **Parameters**:
+  - `node` (Node): The node to be added to the frontier.
+  - `cost` (float): The total cost (f = g + h) associated with the node.
+  
+- **Description**:
+  - Adds a node to the frontier with a given cost.
+
+#### `remove()`
+```python
+def remove(self)
+```
+- **Returns**:
+  - The node with the lowest cost in the frontier.
+  
+- **Raises**:
+  - `Exception`: If the frontier is empty.
+  
+- **Description**:
+  - Removes and returns the node with the lowest cost.
+
 ## Class: `MazeVisualizer`
 
 ### Description
@@ -252,3 +300,18 @@ def draw_maze(self, filename, show_solution=True, show_explored=False)
 - **Description**:
   - Draws the maze to an image file.
 
+## Utility Functions
+
+### `manhattan_distance(state1, state2)`
+```python
+def manhattan_distance(state1, state2)
+```
+- **Parameters**:
+  - `state1` (tuple): The first state `(x1, y1)`.
+  - `state2` (tuple): The second state `(x2, y2)`.
+  
+- **Returns**:
+  - `float`: The Manhattan distance between the two states.
+  
+- **Description**:
+  - Calculates the Manhattan distance between two states.

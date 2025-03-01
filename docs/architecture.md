@@ -13,6 +13,7 @@ This is the main directory where the core program logic is located.
 - **`frontier.py`**: Contains the `Frontier`, `StackFrontier`, and `QueueFrontier` classes, which manage the frontier used in the search algorithms.
 - **`node.py`**: Defines the `Node` class, which represents a state in the maze and holds the parent node and action.
 - **`Visualizer`**: Contains the `MazeVisualizer` class, which is responsible for drawing the maze, highlighting the solution path, and visualizing the exploration process.
+- **`utils.py`**: Contains utility functions, such as the heuristic function for the A* algorithm.
 
 ### 2. `data/`
 This directory contains maze data files (`.txt` format) that are used to test the solver. Each file represents a different maze layout.
@@ -40,8 +41,13 @@ The `Maze` class is the central part of the application. It is responsible for:
 In the future, different pathfinding algorithms (such as DFS, BFS, and A*) will be added to solve the maze. The `main.py` will handle the execution of these algorithms. Currently, the project supports:
 - **DFS (Depth-First Search)**: A search algorithm that explores as far as possible along each branch before backtracking.
 - **BFS (Breadth-First Search)**: A search algorithm that explores all possible paths level by level.
+- **A* Search (A*)**: A heuristic-based search algorithm that combines the cost to reach the node (g) and the estimated cost to the goal (h) to prioritize nodes.
 
-### 3. Main Flow (In `main.py`)
+### 3. Utility Functions
+The `utils.py` file contains utility functions that assist in the pathfinding process. Currently, it includes:
+- **Manhattan Distance**: A heuristic function used in the A* algorithm to estimate the cost from the current node to the goal.
+
+### 4. Main Flow (In `main.py`)
 - **Maze Initialization**: The program begins by loading the maze from a file.
 - **Pathfinding Execution**: The program will then run one of the pathfinding algorithms to find the shortest path from the start point ('A') to the goal ('B').
 - **Output**: Once a solution is found, it will be displayed in the console. The program will also generate a graphical representation of the maze and its solution, which is saved as an image file.
@@ -57,7 +63,6 @@ In the future, different pathfinding algorithms (such as DFS, BFS, and A*) will 
    - The maze, along with the explored cells and solution path, is visualized and saved as a PNG image in the images/ directory.
 
 ## Future Enhancements
-- **A-star Algorithm**: The A* algorithm will be implemented for better efficiency in finding the shortest path.
 - **GUI**: A graphical user interface could be added for interactive maze-solving.
 
 ## Conclusion

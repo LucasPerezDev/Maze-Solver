@@ -1,6 +1,8 @@
 from node import Node
 from frontier import StackFrontier
 from frontier import QueueFrontier
+from frontier import AStarFrontier
+from utils import manhattan_distance
 
 class Solver:
     """
@@ -42,8 +44,8 @@ class Solver:
         """
         # Start at the 'A' point in the maze and create the initial node
         start = Node(state=self.maze.start, parent=None, action=None)
-        frontier = QueueFrontier()  # Use a stack frontier (depth-first search) oa queue frontier (breadth-first search)
-        frontier.add(start)  # Add the start node to the frontier
+        frontier = AStarFrontier()  # Use a stack frontier (depth-first search) oa queue frontier (breadth-first search)
+        frontier.add(start, start.f)  # Add the start node to the frontier
 
         # Explore nodes until the frontier is empty
         while True:
@@ -74,5 +76,7 @@ class Solver:
             for action, state in self.maze.neighbors(node.state):
                 # If the state is not in the frontier or already explored, add it to the frontier
                 if not frontier.contains_state(state) and state not in self.explored:
-                    child = Node(state=state, parent=node, action=action)  # Create a child node
-                    frontier.add(child)  # Add the child node to the frontier
+                    g = node.g + 1  # Assuming each move has a cost of 1
+                    h = manhattan_distance(state, self.maze.goal)
+                    child = Node(state=state, parent=node, action=action, g=g, h=h)  # Create a child node
+                    frontier.add(child, child.f)  # Add the child node to the frontier
